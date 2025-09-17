@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/simple-loan.schema.json",
+  "title": "Simple Loan Application",
+  "type": "object",
+  "required": ["personal_info", "financial_info", "loan_details"],
+  "properties": {
+    "personal_info": {
+      "$ref": "#/$defs/PersonalInfo"
+    },
+    "financial_info": {
+      "$ref": "#/$defs/FinancialInfo"
+    },
+    "loan_details": {
+      "$ref": "#/$defs/LoanDetails"
+    }
+  },
+  "$defs": {
+    "PersonalInfo": {
+      "type": "object",
+      "required": ["name", "email", "age"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "age": {
+          "type": "integer",
+          "minimum": 18,
+          "maximum": 100
+        }
+      }
+    },
+    "FinancialInfo": {
+      "type": "object",
+      "required": ["credit_score"],
+      "properties": {
+        "credit_score": {
+          "type": "integer",
+          "minimum": 300,
+          "maximum": 850
+        },
+        "monthly_income": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "LoanDetails": {
+      "type": "object",
+      "required": ["loan_purpose"],
+      "properties": {
+        "loan_purpose": {
+          "type": "string",
+          "enum": [
+            "debt_consolidation",
+            "home_improvement",
+            "medical_expenses",
+            "education",
+            "business",
+            "emergency",
+            "other"
+          ]
+        }
+      }
+    }
+  }
+}
