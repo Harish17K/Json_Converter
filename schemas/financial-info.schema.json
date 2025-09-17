@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/financial-info.schema.json",
+  "title": "Financial Information Schema",
+  "description": "Schema for financial information in loan application",
+  "type": "object",
+  "required": ["credit_score", "employment_status"],
+  "properties": {
+    "credit_score": {
+      "type": "integer",
+      "minimum": 300,
+      "maximum": 850,
+      "title": "Credit Score",
+      "description": "FICO credit score (300-850)"
+    },
+    "monthly_income": {
+      "type": "number",
+      "minimum": 0,
+      "title": "Monthly Income",
+      "description": "Gross monthly income in USD"
+    },
+    "annual_income": {
+      "type": "number",
+      "minimum": 0,
+      "title": "Annual Income",
+      "description": "Gross annual income in USD"
+    },
+    "employment_status": {
+      "type": "string",
+      "enum": [
+        "full_time_employed",
+        "part_time_employed", 
+        "self_employed",
+        "unemployed",
+        "retired",
+        "student",
+        "homemaker",
+        "contractor"
+      ],
+      "title": "Employment Status"
+    },
+    "employment_length": {
+      "type": "string",
+      "enum": [
+        "less_than_1_year",
+        "1_2_years",
+        "2_5_years", 
+        "5_10_years",
+        "more_than_10_years"
+      ],
+      "title": "Length of Employment",
+      "description": "How long at current job"
+    },
+    "employer_name": {
+      "type": "string",
+      "maxLength": 200,
+      "title": "Employer Name"
+    },
+    "job_title": {
+      "type": "string",
+      "maxLength": 100,
+      "title": "Job Title"
+    },
+    "monthly_debt_payments": {
+      "type": "number",
+      "minimum": 0,
+      "title": "Monthly Debt Payments",
+      "description": "Total monthly debt payments (excluding this loan)"
+    },
+    "bank_account_type": {
+      "type": "string",
+      "enum": ["checking", "savings", "both", "none"],
+      "title": "Bank Account Type"
+    },
+    "years_of_credit_history": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 50,
+      "title": "Years of Credit History"
+    },
+    "bankruptcy_history": {
+      "type": "string",
+      "enum": ["none", "chapter_7", "chapter_13", "other"],
+      "title": "Bankruptcy History"
+    },
+    "other_income_sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "social_security",
+          "disability",
+          "pension",
+          "alimony", 
+          "child_support",
+          "investment_income",
+          "rental_income",
+          "freelance",
+          "other"
+        ]
+      },
+      "title": "Other Income Sources",
+      "description": "Additional sources of income"
+    }
+  }
+}

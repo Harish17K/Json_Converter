@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/medical-info.schema.json",
+  "title": "Medical Information Schema",
+  "description": "Schema for medical information (required only for medical expense loans)",
+  "type": "object",
+  "required": ["medical_expense_type", "estimated_total_cost"],
+  "properties": {
+    "medical_expense_type": {
+      "type": "string",
+      "enum": [
+        "surgery",
+        "dental_treatment",
+        "emergency_treatment",
+        "specialist_consultation",
+        "diagnostic_tests",
+        "prescription_medications",
+        "medical_equipment",
+        "rehabilitation",
+        "mental_health_treatment",
+        "fertility_treatment",
+        "cosmetic_surgery",
+        "other"
+      ],
+      "title": "Type of Medical Expense",
+      "description": "Category of medical treatment or expense"
+    },
+    "estimated_total_cost": {
+      "type": "number",
+      "minimum": 0,
+      "title": "Estimated Total Medical Cost",
+      "description": "Total estimated cost of medical treatment"
+    },
+    "insurance_coverage": {
+      "type": "string", 
+      "enum": [
+        "fully_covered",
+        "partially_covered",
+        "not_covered",
+        "unknown",
+        "no_insurance"
+      ],
+      "title": "Insurance Coverage Status",
+      "description": "How much of the cost is covered by insurance"
+    },
+    "out_of_pocket_amount": {
+      "type": "number",
+      "minimum": 0,
+      "title": "Out of Pocket Amount",
+      "description": "Amount not covered by insurance"
+    },
+    "treatment_urgency": {
+      "type": "string",
+      "enum": [
+        "emergency",
+        "urgent",
+        "scheduled",
+        "elective"
+      ],
+      "title": "Treatment Urgency",
+      "description": "How urgent the medical treatment is"
+    },
+    "healthcare_provider": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 200,
+          "title": "Healthcare Provider Name"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "hospital",
+            "clinic", 
+            "private_practice",
+            "urgent_care",
+            "dental_office",
+            "specialty_center",
+            "other"
+          ],
+          "title": "Type of Healthcare Facility"
+        },
+        "location": {
+          "type": "string",
+          "maxLength": 200,
+          "title": "Provider Location"
+        }
+      }
+    },
+    "previous_medical_loans": {
+      "type": "boolean",
+      "title": "Previous Medical Loans",
+      "description": "Have you taken medical loans before?"
+    },
+    "payment_plan_available": {
+      "type": "boolean",
+      "title": "Payment Plan Available",
+      "description": "Does the provider offer payment plans?"
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/personal-info.schema.json",
+  "title": "Personal Information Schema",
+  "description": "Schema for personal information in loan application",
+  "type": "object",
+  "required": ["name", "email", "age", "marital_status"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 100,
+      "title": "Full Name",
+      "description": "Legal full name as it appears on government ID"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "title": "Email Address",
+      "description": "Primary email address for communication"
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "title": "Age",
+      "description": "Current age in years"
+    },
+    "phone_number": {
+      "type": "string",
+      "pattern": "^[+]?[1-9]\\d{1,14}$",
+      "title": "Phone Number",
+      "description": "Primary contact phone number"
+    },
+    "address": {
+      "type": "object",
+      "required": ["street", "city", "state", "zip_code"],
+      "properties": {
+        "street": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 200,
+          "title": "Street Address"
+        },
+        "city": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "title": "City"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+            "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+            "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+            "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+            "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+          ],
+          "title": "State",
+          "description": "US State abbreviation"
+        },
+        "zip_code": {
+          "type": "string",
+          "pattern": "^\\d{5}(-\\d{4})?$",
+          "title": "ZIP Code"
+        }
+      }
+    },
+    "marital_status": {
+      "type": "string",
+      "enum": ["single", "married", "divorced", "widowed", "separated"],
+      "title": "Marital Status"
+    },
+    "dependents": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 20,
+      "title": "Number of Dependents",
+      "description": "Number of financial dependents"
+    },
+    "citizenship_status": {
+      "type": "string",
+      "enum": ["us_citizen", "permanent_resident", "work_visa", "other"],
+      "title": "Citizenship Status"
+    },
+    "housing_status": {
+      "type": "string",
+      "enum": ["own", "rent", "mortgage", "living_with_family", "other"],
+      "title": "Housing Status",
+      "description": "Current housing situation"
+    }
+  }
+}

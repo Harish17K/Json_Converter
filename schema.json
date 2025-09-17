@@ -1,73 +1,104 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/simple-loan.schema.json",
-  "title": "Simple Loan Application",
+  "$id": "https://example.com/loan-application.schema.json",
+  "title": "Loan Application Schema",
+  "description": "Main schema for loan application with conditional logic",
   "type": "object",
   "required": ["personal_info", "financial_info", "loan_details"],
   "properties": {
     "personal_info": {
-      "$ref": "#/$defs/PersonalInfo"
+      "$ref": "/schemas/personal-info.schema.json"
     },
     "financial_info": {
-      "$ref": "#/$defs/FinancialInfo"
+      "$ref": "/schemas/financial-info.schema.json"
+    },
+    "medical_info": {
+      "$ref": "/schemas/medical-info.schema.json"
     },
     "loan_details": {
-      "$ref": "#/$defs/LoanDetails"
-    }
-  },
-  "$defs": {
-    "PersonalInfo": {
       "type": "object",
-      "required": ["name", "email", "age"],
-      "properties": {
-        "name": {
-          "type": "string",
-          "minLength": 2,
-          "maxLength": 100
-        },
-        "email": {
-          "type": "string",
-          "format": "email"
-        },
-        "age": {
-          "type": "integer",
-          "minimum": 18,
-          "maximum": 100
-        }
-      }
-    },
-    "FinancialInfo": {
-      "type": "object",
-      "required": ["credit_score"],
-      "properties": {
-        "credit_score": {
-          "type": "integer",
-          "minimum": 300,
-          "maximum": 850
-        },
-        "monthly_income": {
-          "type": "number",
-          "minimum": 0
-        }
-      }
-    },
-    "LoanDetails": {
-      "type": "object",
-      "required": ["loan_purpose"],
+      "required": ["loan_purpose", "loan_amount"],
       "properties": {
         "loan_purpose": {
           "type": "string",
           "enum": [
             "debt_consolidation",
-            "home_improvement",
+            "home_improvement", 
             "medical_expenses",
             "education",
             "business",
             "emergency",
+            "vacation",
+            "wedding",
+            "moving",
             "other"
-          ]
+          ],
+          "title": "Loan Purpose",
+          "description": "Primary reason for the loan"
+        },
+        "loan_amount": {
+          "type": "number",
+          "minimum": 1000,
+          "maximum": 500000,
+          "title": "Requested Loan Amount",
+          "description": "Amount of money being requested"
+        },
+        "loan_term": {
+          "type": "integer",
+          "enum": [12, 24, 36, 48, 60, 72, 84],
+          "title": "Loan Term (months)",
+          "description": "Repayment period in months"
+        },
+        "interest_rate_type": {
+          "type": "string",
+          "enum": ["fixed", "variable", "promotional"],
+          "title": "Interest Rate Type",
+          "description": "Type of interest rate preferred"
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "financial_info": {
+            "properties": {
+              "credit_score": {
+                "minimum": 750,
+                "maximum": 850
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "financial_info": {
+            "properties": {
+              "monthly_income": false,
+              "annual_income": false,
+              "employment_length": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "loan_details": {
+            "properties": {
+              "loan_purpose": {
+                "const": "medical_expenses"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "required": ["medical_info"]
+      }
+    }
+  ]
 }
